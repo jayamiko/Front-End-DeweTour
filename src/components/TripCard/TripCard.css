@@ -1,0 +1,34 @@
+.payment-content-container {
+    background-color: #ffff;
+    position: relative;
+  }
+  
+  .payment-content-container small {
+    color: #a8a8a8;
+  }
+
+  .container-profile{
+    border: solid red 2px;
+  }
+  
+  .info-payment {
+    background: linear-gradient(180deg, #ff9900 0%, #ff9900 10%);
+  
+    border-radius: 2px;
+  }
+  
+  .info-payment p {
+    color: #ff9900;
+  }
+  
+  .inf {
+    width: 100%;
+  }
+
+  
+  .invoice{
+    width: 200px;
+    height: 180.31px;
+    margin-right: 20px;
+    margin-top: 50px;
+  }

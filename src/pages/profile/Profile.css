@@ -1,0 +1,58 @@
+.profile-container {
+    background-color: #f1f1f1;
+    padding-top: 200px !important;
+    padding-bottom: 300px !important;
+    position: relative;
+  }
+  
+  .profile-container .img-1 {
+    width: 30px;
+    height: 30px;
+  }
+
+  .imageProfile{
+    height: 250px;
+    width: 250px;
+  }
+
+  .tripCard{
+    left: 500px;
+  }
+  
+  p {
+    margin-bottom: 0;
+  }
+  
+  small {
+    color: #a8a8a8;
+  }
+  
+  .data-container {
+    background-color: #ffffff;
+    width: 900px;
+    height: 450px;
+    margin-bottom: 250px;
+  }
+
+  .editPhoto{
+    margin-top: 10px;
+    background-color: orange;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+  }
+
+  .profileSize{
+    width: 120px;
+    height: 80px;
+  }
+  
+  .history-trip {
+    position: absolute;
+    font-weight: bold;
+    height: 49px;
+    left: 110px;
+    top: 830px;
+  }

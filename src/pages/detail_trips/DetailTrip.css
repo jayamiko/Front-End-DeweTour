@@ -1,0 +1,90 @@
+.detail-tour-title {
+    position: absolute;
+    width: 833px;
+    height: 66px;
+    top: 120px;
+    left: 180px;
+  }
+  
+  .detail-tour-title small {
+    color: #a8a8a8;
+  }
+  
+  .detailTour {
+    border: solid rgb(133, 130, 130) 2px;
+    display: flex !important;
+    justify-content: center !important;
+    top: 100px;
+    background-color: #f1f1f1;
+    height: 1600px;
+    overflow: hidden;
+    width: 1380px;
+  }
+  
+  .imgContainer {
+    position: absolute;
+    top: 250px;
+    left: 60px;
+  }
+  
+  .container .image-1 {
+    width: 1018px;
+    height: 361px;
+  }
+  
+  .container .image-2 {
+    width: 328px;
+  }
+  .container .image-3 {
+    width: 328px;
+  }
+  .container .image-4 {
+    width: 328px;
+  }
+  
+  .img img {
+    width: 24px;
+    height: 24px;
+    margin-top: 8px;
+  }
+  
+  .img-container small {
+    color: #a8a8a8;
+    font-weight: 500;
+  }
+  
+  .descriptionContainer {
+    position: absolute;
+    width: 1053px;
+    height: 85px;
+    left: 160px;
+    top: 1040px;
+  }
+  
+  .descriptionContainer p {
+    color: #a8a8a8;
+    font-style: italic;
+  }
+  
+  .book-container img {
+    width: 100%;
+  }
+  
+  .bookContainer {
+    position: absolute;
+    width: 1063px;
+    left: 160px;
+    top: 1235px;
+  }
+
+  .bookContainer button{
+    float: right;
+    width: 150px;
+  }
+
+  .informationTrip{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 95px;
+  }

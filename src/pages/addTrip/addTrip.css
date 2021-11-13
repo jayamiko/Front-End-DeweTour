@@ -1,0 +1,31 @@
+.container-image {
+  cursor: pointer;
+  width: 200px;
+  height: 40px;
+  color: #ffaf00;
+  background-color: #c4c4c4;
+  padding: 8px;
+  margin-left: 5px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #b1b1b1;
+  margin-bottom: 20px;
+}
+
+.image-style {
+  height: 25px;
+  width: 20px;
+  margin-bottom: 8px;
+}
+
+.input-field {
+  background-color: #c4c4c4 !important;
+  border: 1px solid #b1b1b1 !important;
+}
+
+.button-style {
+  margin-left: 40%;
+  width: 250px;
+  height: 40px;
+  color: white !important;
+}
