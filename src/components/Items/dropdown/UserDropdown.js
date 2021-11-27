@@ -9,6 +9,9 @@ import Payment from "../../../img/Vector.png";
 import Logout from "../../../img/logout.png";
 import Polygon from "../../../img/Polygon.png";
 import { useHistory } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import ProfileImg from "../../../img/Rectangle 12.png";
+import { API } from '../../../config/api'
 
 
 function UserDropdown() {
@@ -28,6 +31,25 @@ function UserDropdown() {
         });
         history.push('/')
     };
+
+    const [profile, setProfile] = useState([]);
+
+    // Profile
+    const getDataProfile = async () => {
+        try {
+            const profileAPI = await API.get('/users')
+            setProfile(profileAPI.data.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getDataProfile();
+    }, []);
+
+    console.log(profile);
+
     return (
         <>
             <div className="dropdown p-5 ">
@@ -38,13 +60,13 @@ function UserDropdown() {
                         <div className="d-flex align-items-center gap-2">
                             <img src={User} alt=""></img>
                             <Link to="/profile">
-                                <a className="fw-bold text-dark" href="#">Profile</a>
+                                <a className="fw-bold text-dark" href="/">Profile</a>
                             </Link>
                         </div>
                         <div className="d-flex align-items-center gap-2">
                             <img src={Payment} alt=""></img>
                             <Link to="/payment">
-                                <a className="fw-bold text-dark" href="#">Pay</a>
+                                <a className="fw-bold text-dark" href="/">Pay</a>
                             </Link>
                         </div>
                         <div
@@ -52,7 +74,7 @@ function UserDropdown() {
                             className="d-flex align-items-center po-hover gap-2"
                         >
                             <img src={Logout} alt=""></img>
-                            <a className="fw-bold text-dark" href="#">Logout</a>
+                            <a className="fw-bold text-dark" href="/">Logout</a>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer } from "react";
 
 const initialValue = {
     isLogin: false,
@@ -19,62 +19,31 @@ const Reducer = (state, action) => {
     const { type, payload } = action;
     console.log(payload);
     switch (type) {
+        case "AUTH_SUCCESS":
         case "LOGIN":
             localStorage.setItem('token', payload.token)
             return {
                 isLogin: true,
                 user: payload
             };
-
+        case "AUTH_ERROR":
         case "LOGOUT":
-            const loginState = JSON.parse(localStorage.getItem("user_login"));
-            console.log(loginState);
-            if (state) {
-                localStorage.removeItem("user_login");
-                return {
-                    isLogin: false,
-                    isAdmin: false,
-                    payload,
-                };
-            } else {
-                localStorage.removeItem("admin_login");
-                return {
-                    isLogin: false,
-                    isAdmin: false,
-                    payload,
-                };
-            }
-        case 'AUTH_SUCCESS':
-        case "AUTH":
-            const login = JSON.parse(localStorage.getItem("user_login"));
-
-            return login
-                ? login
-                : {
-                    isLogin: false,
-                    user: {
-                        email: "",
-                        password: "",
-                    },
-                };
-        case "ADMIN_AUTH":
-            const loginAdminState = JSON.parse(localStorage.getItem("admin"));
-
-            return loginAdminState
-                ? loginAdminState
-                : {
-                    isLogin: false,
-                    isAdmin: false,
-                    user: {
-                        email: "",
-                        password: "",
-                    },
-                };
-        case 'AUTH_ERROR':
+            localStorage.removeItem("token");
+            return {
+                isLogin: false,
+                user: {
+                    name: "",
+                    email: "",
+                    status: "",
+                    phone: "",
+                    address: "",
+                    photo: "",
+                },
+            };
         default:
-            return;
+            throw new Error("type doesn't match cases");
     }
-};
+}
 
 export const AuthContextProvider = ({ children }) => {
     const [stateAuth, dispatch] = useReducer(Reducer, initialValue);

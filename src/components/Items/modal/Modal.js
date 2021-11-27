@@ -22,7 +22,7 @@ function ModalComp() {
                             <p className="text-light shadow-none border-none outline-none">
                                 Your payment will be confirmed within 1 x 24 hours To see orders
                                 click
-                                <a>Here</a> ,thank you
+                                <a href="/">Here</a> ,thank you
                             </p>
                         </Modal.Body>
                     </Modal>

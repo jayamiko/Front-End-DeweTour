@@ -27,7 +27,7 @@ function Main() {
     return (
         <div>
             <h1 className="groupTitle">Group Tour</h1>
-            <div className="container-fluid containerGroup mt-5 d-flex gap-3 flex-wrap ">
+            < div className="container-fluid containerGroup mt-5 d-flex gap-3 flex-wrap ">
                 {trips.map((allTrips) => (
                     <div key={allTrips.id} className="container contentContainer rounded mt-3">
                         <Link to={`/detail-trip/${allTrips.id}`}>

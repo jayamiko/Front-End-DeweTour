@@ -9,3 +9,14 @@
     left: 1490px;
     bottom: 140px;
   }
+
+  .containerPaymentCard{
+  padding-top: 200px !important;
+  padding-bottom: 200px !important;
+  padding-left: 100px;
+  padding-right: 100px;
+  }
+
+  .btnChange{
+    background-color: orange !important;
+  }

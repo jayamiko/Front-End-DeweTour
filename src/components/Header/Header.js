@@ -4,6 +4,7 @@ import Navbar from "../Navbar/Navbar";
 import Card from "../Items/card/Card";
 
 function Header() {
+
     return (
         <div className="header-image">
             {<Navbar />}
@@ -17,13 +18,17 @@ function Header() {
             <div className="container-fluid d-flex input-container">
                 <div class="input-group mb-3">
                     <input
-                        type="text"
                         class="form-control"
                         id="basic-addon2"
                         aria-label="Recipient's username"
                         aria-describedby="basic-addon2"
+                        type="search"
+                        placeholder="Search"
                     />
-                    <a class="input-group-text" id="basic-addon2">
+                    <a class="input-group-text"
+                        id="basic-addon2"
+                        href="/"
+                    >
                         Search
                     </a>
                 </div>

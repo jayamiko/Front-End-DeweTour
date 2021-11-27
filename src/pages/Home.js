@@ -5,12 +5,15 @@ import Header from "../components/Header/Header";
 import Main from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
 import ListTransaction from "../pages/list_transactions/ListTransaction";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../Context/AuthContextProvider";
 
 function Home() {
 
-    const { stateAuth, dispatch } = useContext(AuthContext);
+    const { stateAuth } = useContext(AuthContext);
+    const [trips, setTrips] = useState(null);
+    const [searchData, setSearchData] = useState("");
+    const [isSearching, setIsSearching] = useState(false);
 
     return (
         <>
@@ -22,7 +25,12 @@ function Home() {
                 ) : (
                     <div>
                         <Navbar />
-                        <Header />
+                        <Header
+                            trips={trips}
+                            setIsSearching={setIsSearching}
+                            searchData={searchData}
+                            setSearchData={setSearchData}
+                        />
                         <Container fluid className="main">
                             <Main />
                             <Footer />

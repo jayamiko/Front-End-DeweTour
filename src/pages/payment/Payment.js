@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-
 import Navbar from "../../components/Navbar/Navbar";
 import PaymentCard from "../../components/Items/card/PaymentCard";
 import Footer from "../../components/Footer/Footer";
-// import { ModalPopUp } from "../../components/items/modal/PopUp";
-
+import PopUp from "../../components/Items/modal/popUp";
 import { API } from "../../config/api";
 import { AuthContext } from "../../Context/AuthContextProvider";
 import { NotificationManager } from "react-notifications";
-// import NotFoundIcon from "assets/icons/not-found.svg";
+import Nodata from '../../img/no-data.jpg'
+import './Payment.css'
 
 export default function Payment() {
 
@@ -23,7 +22,8 @@ export default function Payment() {
     const getLastTransaction = async () => {
         try {
             const response = await API.get("/transactions");
-            const filteredTransactions = response.data.data.filter(
+            setTransaction(response.data.data)
+            const filteredTransactions = transaction.filter(
                 (item) => item.user.id === stateAuth.user.id
             );
             setTransaction(filteredTransactions[filteredTransactions.length - 1]);
@@ -65,6 +65,7 @@ export default function Payment() {
     useEffect(() => {
         getLastTransaction();
     }, []);
+    console.log(transaction);
 
     return (
         <>
@@ -75,7 +76,7 @@ export default function Payment() {
                         <div className="not-found d-flex justify-content-center align-items-center">
                             <div className="text-center">
                                 <img
-                                    src={""}
+                                    src={Nodata}
                                     alt="Not Found"
                                     width="250"
                                     height="250"
@@ -86,22 +87,13 @@ export default function Payment() {
                     </div>
                 ) : (
                     <>
-                        <PaymentCard data={transaction} setData={setTransaction} />
-                        {transaction?.status === "Waiting Payment" && (
-                            <div className="container">
-                                <div className="d-flex justify-content-end">
-                                    <button
-                                        className={`btn btn-primary mt-2 fw-bold text-white ${transaction?.status === "Waiting Approve" && "d-none"
-                                            }`}
-                                        style={{ width: 213, height: 50 }}
-                                        onClick={handlePay}
-                                    >
-                                        PAY
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                        {/* <ModalPopUp isShow={isShow} handleClose={handleClose} /> */}
+                        <div className="containerPayments">
+                            <PaymentCard data={transaction} setData={setTransaction} className="containerPaymentUser" />
+                            {transaction?.status === "Waiting Payment" && (
+                                <div className="container"></div>
+                            )}
+                        </div>
+                        <PopUp isShow={isShow} handleClose={handleClose} />
                     </>
                 )}
             </main>

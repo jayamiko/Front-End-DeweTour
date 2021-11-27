@@ -7,8 +7,47 @@ import IncomeTrip from "./pages/IncomeTrip/IncomeTrip";
 import AddTrip from "./pages/addTrip/addTrip";
 import PrivateRoute from "./components/PrivateRoutes/PrivateRoutes";
 import ListTransaction from "./pages/list_transactions/ListTransaction";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "./Context/AuthContextProvider";
+import { API, setAuthToken } from "./config/api";
+
+// init token on axios every time the app is refreshed
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 function App() {
+
+  const { dispatch } = useContext(AuthContext);
+
+  const checkUser = async () => {
+    try {
+      const response = await API.get("/check-auth");
+
+      if (response.status !== 200) {
+        dispatch({
+          type: "AUTH_ERROR",
+        });
+      }
+
+      let payload = response.data.data.user;
+      payload.token = localStorage.token;
+      dispatch({
+        type: "AUTH_SUCCESS",
+        payload,
+      });
+    } catch (error) {
+      console.log(error);
+      dispatch({
+        type: "AUTH_ERROR",
+      });
+    }
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
   return (
     <BrowserRouter>
       <Switch>

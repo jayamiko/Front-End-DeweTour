@@ -9,9 +9,16 @@ import { useHistory } from "react-router-dom";
 export default function Login() {
     const [modal, setModal] = useState(false);
     const [registerModal, setRegisterModal] = useState(false);
-    const { state, dispatch } = useContext(AuthContext);
+    const { stateAuth, dispatch } = useContext(AuthContext);
     const [message, setMessage] = useState(null)
     let history = useHistory();
+
+    const checkAuth = () => {
+        if (stateAuth.isLogin === true) {
+            history.push("/");
+        }
+    };
+    checkAuth();
 
     const openModalLogin = () => {
         setModal(true);

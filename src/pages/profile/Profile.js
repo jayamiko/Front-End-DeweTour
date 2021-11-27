@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { Container, Form } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import "./Profile.css";
-import { InputImage } from '../../components/Items/Format/Form';
+import InputFileAvatar from './updateAvatar'
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import TripCard from "../../components/TripCard/TripCard";
+import HistoryPayment from "../../components/Items/card/HistoryPayment";
 import Avatar from "../../img/avatar.png";
 import Envelope from "../../img/envelope.png";
 import Call from "../../img/phone.png";
@@ -15,21 +15,14 @@ import { API } from '../../config/api'
 import { useEffect, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContextProvider';
 import { useHistory } from "react-router-dom";
+import Nodata from '../../img/no-data.jpg'
 
 export const Profile = () => {
 
     const history = useHistory()
     const { stateAuth, dispatch } = useContext(AuthContext);
     const [profile, setProfile] = useState([]);
-    const [form, setForm] = useState({
-        photo: '',
-        name: '',
-        email: '',
-        phone: '',
-        address: '',
-    });
-    const { name, email, phone, address } = form;
-    const id = stateAuth.user.id;
+    const [preview, setPreview] = useState(ProfileImg);
 
 
     // Profile
@@ -37,7 +30,6 @@ export const Profile = () => {
         try {
             const profileAPI = await API.get('/users')
             setProfile(profileAPI.data.data)
-            console.log(profileAPI.data.data);
         } catch (error) {
             console.log(error)
         }
@@ -48,39 +40,28 @@ export const Profile = () => {
     }, []);
     console.log(profile);
 
-    const [image, setImage] = useState({ photo: "" });
-    const [preview, setPreview] = useState(null);
+    const [transactions, setTransactions] = useState([]);
 
-    const handleOnChange = (e) => {
-        setImage({
-            ...image,
-            [e.target.name]:
-                e.target.type === "file" ? e.target.files : e.target.value,
-        });
-        if (e.target.name === "photo") {
-            let url = URL.createObjectURL(e.target.files[0]);
-            setPreview(url);
-        }
+    const getAllTransaction = async () => {
+        const response = await API.get("/transactions");
+        console.log(response.data.data[0].user.id);
+        setTransactions(response.data.data)
+        const filteredTransactions = response.data.data
+            .filter((item) => item.user.id === stateAuth.user.id)
+            .filter(
+                (item) =>
+                    item.status === "Waiting Approve" ||
+                    item.status === "Approve" ||
+                    item.status === "Cancel"
+            );
+        setTransactions(filteredTransactions);
     };
 
-    const handleSubmit = async () => {
-        try {
-            const config = {
-                headers: {
-                    "Content-type": "application/json",
-                },
-            };
-            const data = new FormData();
-            data.set("photo", image.photo[0]);
+    useEffect(() => {
+        getAllTransaction();
+    }, []);
 
-            const response = await API.put("/user/", data, config);
-            getProfile()
-            console.log(response);
-
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    console.log(transactions);
 
     return (
         <div>
@@ -91,28 +72,28 @@ export const Profile = () => {
                         <div className="profile-content px-4">
                             <h1 className="mb-4">Personal Info</h1>
                             <div className="d-flex align-items-center gap-3 mb-4 ">
-                                <img className="img-1" src={Avatar}></img>
+                                <img className="img-1" src={Avatar} alt=""></img>
                                 <div>
                                     <p className="fw-bold">{myProfile.name}</p>
                                     <small>Full Name</small>
                                 </div>
                             </div>
                             <div className="d-flex align-items-center gap-3 mb-4 ">
-                                <img src={Envelope}></img>
+                                <img src={Envelope} alt=""></img>
                                 <div>
                                     <p className="fw-bold">{myProfile.email}</p>
                                     <small>Email</small>
                                 </div>
                             </div>
                             <div className="d-flex align-items-center gap-3 mb-4 ">
-                                <img src={Call}></img>
+                                <img src={Call} alt=""></img>
                                 <div>
                                     <p className="fw-bold">{myProfile.phone}</p>
                                     <small>Mobile Phone</small>
                                 </div>
                             </div>
                             <div className="d-flex align-items-center gap-3 mb-4 ">
-                                <img src={Map}></img>
+                                <img src={Map} alt=""></img>
                                 <div>
                                     <p className="fw-bold">
                                         {myProfile.address}
@@ -121,24 +102,36 @@ export const Profile = () => {
                                 </div>
                             </div>
                         </div>
-
-                        <div className="d-flex flex-column gap-3 mb-4">
-                            <Form action="/" method="post" submit={handleSubmit}>
-                                <img src={myProfile.photo} className="imageProfile" alt=""></img>
-                                {preview && (
-                                    <div>
-                                        <img className="profileSize" src={preview} alt="profile" />
-                                    </div>
-                                )}
-                                <div className="editPhoto">
-                                    <InputImage onChange={handleOnChange} labelFor="photo" labelName="Change Photo Profile" />
-                                </div>
-                            </Form>
-                        </div>
+                        <InputFileAvatar
+                            userId={stateAuth.user.id}
+                            avatar={myProfile.photo}
+                        />
                     </Container>
                 ))}
-                <h1 className="history-trip">History Trip</h1>
-                <TripCard className="tripCard" image={QRimage} />
+                <div className="payment-card container pt-5">
+                    {transactions.length < 1 ? (
+                        <div className="container">
+                            <div className="not-found d-flex justify-content-center align-items-center">
+                                <div className="text-center">
+                                    <img
+                                        src={Nodata}
+                                        alt="Not Found"
+                                        width="250"
+                                        height="250"
+                                    />
+                                    <h1 className="fw-bold h5">No History</h1>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <>
+                            <h2 className="fw-bold mb-5 ms-3">History Trip</h2>
+                            {transactions.map((item, index) => (
+                                <HistoryPayment data={item} key={`paymentCard-${index}`} />
+                            ))}
+                        </>
+                    )}
+                </div>
                 <Footer />
             </Container>
         </div >
