@@ -10,7 +10,6 @@ import Logout from "../../../img/logout.png";
 import Polygon from "../../../img/Polygon.png";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from 'react';
-import ProfileImg from "../../../img/Rectangle 12.png";
 import { API } from '../../../config/api'
 
 
@@ -48,12 +47,10 @@ function UserDropdown() {
         getDataProfile();
     }, []);
 
-    console.log(profile);
-
     return (
         <>
             <div className="dropdown p-5 ">
-                <img className="polygon" src={Polygon} />
+                <img className="polygon" src={Polygon} alt="" />
                 <img src={Profile} alt="Profile" />
                 <div className="dropdown-content py-3 px-3">
                     <div className="desc d-flex flex-column gap-4">
@@ -63,12 +60,12 @@ function UserDropdown() {
                                 <a className="fw-bold text-dark" href="/">Profile</a>
                             </Link>
                         </div>
-                        <div className="d-flex align-items-center gap-2">
-                            <img src={Payment} alt=""></img>
-                            <Link to="/payment">
-                                <a className="fw-bold text-dark" href="/">Pay</a>
-                            </Link>
-                        </div>
+                        <Link to="/payment">
+                            <div className="d-flex align-items-center gap-2">
+                                <img src={Payment} alt=""></img>
+                                <a className="fw-bold text-dark" href="/payment">Pay</a>
+                            </div>
+                        </Link>
                         <div
                             onClick={logoutHandle}
                             className="d-flex align-items-center po-hover gap-2"

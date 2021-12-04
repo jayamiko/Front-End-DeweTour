@@ -1,7 +1,4 @@
-
-
 export default function ProofPayment({ setData, setPreview }) {
-
     const handleChange = (e) => {
         const newImage = URL.createObjectURL(e.target.files[0]);
         setPreview(newImage);
@@ -33,7 +30,7 @@ export default function ProofPayment({ setData, setPreview }) {
                     </label>
                 </div>
                 <div className="text-muted" style={{ fontSize: 12 }}>
-                    Upload Your Payment
+                    upload payment proof
                 </div>
             </div>
         </div>

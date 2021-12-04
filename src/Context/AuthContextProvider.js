@@ -1,42 +1,46 @@
 import { createContext, useReducer } from "react";
 
+// this is initial value for global auth state (context)
 const initialValue = {
+    isLoading: true,
     isLogin: false,
     user: {
-        id: "",
         name: "",
         email: "",
-        status: "",
-        password: "",
         phone: "",
+        address: "",
+        status: "",
         photo: "",
     },
 };
 
+// create context
 export const AuthContext = createContext();
 
-const Reducer = (state, action) => {
+// reducer use to handle complex logic, use wisely
+function reducer(state, action) {
     const { type, payload } = action;
-    console.log(payload);
     switch (type) {
         case "AUTH_SUCCESS":
         case "LOGIN":
-            localStorage.setItem('token', payload.token)
+            localStorage.setItem("token", payload.token);
             return {
+                isLoading: false,
                 isLogin: true,
-                user: payload
+                user: payload,
             };
         case "AUTH_ERROR":
         case "LOGOUT":
             localStorage.removeItem("token");
             return {
+                isLoading: false,
                 isLogin: false,
                 user: {
                     name: "",
                     email: "",
-                    status: "",
                     phone: "",
                     address: "",
+                    status: "",
                     photo: "",
                 },
             };
@@ -45,8 +49,14 @@ const Reducer = (state, action) => {
     }
 }
 
+/** this is wrapper component that will use to be parent component of children that need to
+ * consume the state globally
+ * @param {*} children
+ * @returns
+ **/
+
 export const AuthContextProvider = ({ children }) => {
-    const [stateAuth, dispatch] = useReducer(Reducer, initialValue);
+    const [stateAuth, dispatch] = useReducer(reducer, initialValue);
 
     return (
         <AuthContext.Provider value={{ stateAuth, dispatch }}>

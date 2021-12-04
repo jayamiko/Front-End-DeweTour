@@ -18,7 +18,6 @@ function Main() {
         try {
             const response = await API.get('/trips')
             setTrips(response.data.data)
-            console.log(response.data.data);
         } catch (error) {
             console.log(error)
         }
@@ -27,7 +26,6 @@ function Main() {
     useEffect(() => {
         getTrips();
     }, []);
-    console.log(trips);
 
     return (
         <div>

@@ -35,7 +35,7 @@ export default function Avatar({ userId, avatar }) {
         <div className="input-file-avatar">
             <div className="preview-image" style={{ width: 280, height: 345 }}>
                 <img
-                    src={preview}
+                    src={avatar}
                     alt="User"
                     width="280"
                     height="345"

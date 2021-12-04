@@ -10,7 +10,7 @@ import ListTransaction from "./pages/list_transactions/ListTransaction";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "./Context/AuthContextProvider";
 import { API, setAuthToken } from "./config/api";
-
+import './App.css'
 // init token on axios every time the app is refreshed
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -18,7 +18,7 @@ if (localStorage.token) {
 
 function App() {
 
-  const { dispatch } = useContext(AuthContext);
+  const { stateAuth, dispatch } = useContext(AuthContext);
 
   const checkUser = async () => {
     try {
@@ -52,7 +52,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/detail-trip/:id" component={DetailTrip} />
+        <Route exact path="/detail/:id" component={DetailTrip} />
         <Route exact path="/payment" component={Payment} />
         <Route exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/addtrip" component={AddTrip} />

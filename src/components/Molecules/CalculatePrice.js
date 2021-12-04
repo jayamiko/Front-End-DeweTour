@@ -1,14 +1,21 @@
-import { useHistory } from "react-router-dom";
-import Register from "../../components/Navbar/Register";
-import Login from "../../components/Navbar/Login";
-import { API } from "../../config/api";
-import formatNumber from "../../components/Items/Format/format";
-import { Alert } from "react-bootstrap"
 import { useEffect, useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+
+import ModalLogin from "../Items/modal/ModalLogin";
+import ModalRegister from "../Items/modal/ModalRegister.js";
+
+import { API } from "../../config/api";
 import { AuthContext } from "../../Context/AuthContextProvider";
 
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+toast.configure()
+
 export default function CalculatePrice({ tripId, price, quota }) {
+
     const history = useHistory();
+    const { stateAuth } = useContext(AuthContext);
 
     const [show, setShow] = useState({
         login: false,
@@ -16,11 +23,10 @@ export default function CalculatePrice({ tripId, price, quota }) {
         confirm: false,
     });
 
-    const { stateAuth } = useContext(AuthContext);
     const [transaction, setTransaction] = useState({
         counterQty: 1,
-        total: price,
-        tripId: tripId,
+        total: "",
+        tripId: "",
         userId: stateAuth.user.id,
     });
 
@@ -32,9 +38,7 @@ export default function CalculatePrice({ tripId, price, quota }) {
 
     const getDataTransactionsByUserId = async () => {
         const response = await API.get("/transactions");
-        setTransaction(response.data.data)
-        console.log(response.data.data);
-        const filteredTransactions = dataTransaction.filter(
+        const filteredTransactions = response.data.data.filter(
             (item) => item.user.id === stateAuth.user.id
         );
         setDataTransaction(filteredTransactions[filteredTransactions.length - 1]);
@@ -91,32 +95,30 @@ export default function CalculatePrice({ tripId, price, quota }) {
     const handleSubmit = async () => {
         try {
             if (stateAuth.isLogin) {
-                const detailTripData = await API.get(`/trips/${tripId}`);
+                const detailTripData = await API.get(`/trip/${tripId}`);
                 const quotaTrip = detailTripData.data.data.quota;
 
                 let resultQuota = quotaTrip - transaction.counterQty;
 
                 if (resultQuota < 0) {
-
-                    history.push("/profile");
+                    toast.success(`Limited Quota Tour`, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                        autoClose: 2000
+                    })
 
                     const pushToHome = setTimeout(() => {
                         history.push("/");
-                    }, 1000);
+                    }, 3000);
 
                     return pushToHome;
                 }
 
                 if (dataTransaction?.status === "Waiting Payment") {
-                    return (
-                        <Alert>
-                            "Please pay your last transaction first before make a new transaction",
-                            "Warning"</Alert>,
-                        5000,
-                        () => {
-                            history.push("/payment");
-                        }
-                    );
+                    toast.success(`Booking is Success`, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                        autoClose: 2000
+                    })
+                    history.push("/payment");
                 }
 
                 const config = {
@@ -127,7 +129,7 @@ export default function CalculatePrice({ tripId, price, quota }) {
 
                 const bodyTransaction = JSON.stringify(transaction);
                 const response = await API.post(
-                    "/transaction",
+                    "/transactions",
                     bodyTransaction,
                     config
                 );
@@ -135,7 +137,10 @@ export default function CalculatePrice({ tripId, price, quota }) {
                 const bodyQuota = JSON.stringify(quotaRemaining);
                 await API.put(`/trip/${tripId}`, bodyQuota, config);
                 response.data.status === "success" &&
-                    console.log(response.data.message, "Success")
+                    toast.success(`Success`, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                        autoClose: 2000
+                    })
 
                 history.push("/payment");
             } else {
@@ -146,13 +151,18 @@ export default function CalculatePrice({ tripId, price, quota }) {
         }
     };
 
+    console.log("==== TRANSACTION =====");
+    console.log(transaction);
+    console.log("==== DATA TRANSACTION =====");
+    console.log(dataTransaction);
+
     return (
         <section className="detail-calculate mb-5">
             <div className="container">
                 <div className="d-flex justify-content-between fw-bold fs-5">
                     <div className="price d-flex align-items-center">
                         IDR.
-                        <span className="mx-2 text-primary">{formatNumber(price)}</span>/
+                        <span className="mx-2 text-primary">{price}</span>/
                         Person
                     </div>
                     <div className="quantity">
@@ -177,7 +187,7 @@ export default function CalculatePrice({ tripId, price, quota }) {
                 <div className="d-flex justify-content-between fw-bold">
                     <div className="fs-5">Total :</div>
                     <div className="text-primary fs-5">
-                        IDR. {formatNumber(totalPrice)}
+                        IDR. {totalPrice}
                     </div>
                 </div>
                 <hr />
@@ -193,13 +203,13 @@ export default function CalculatePrice({ tripId, price, quota }) {
                 </div>
             </div>
 
-            <Login
+            <ModalLogin
                 show={show.login}
                 handleClose={handleClose}
                 handleSwitch={handleSwitch}
             />
 
-            <Register
+            <ModalRegister
                 show={show.register}
                 handleClose={handleClose}
                 handleSwitch={handleSwitch}

@@ -48,7 +48,6 @@ export default function Register() {
 
             const body = JSON.stringify(formRegister)
             const response = await API.post("/register", body, config)
-            console.log(response.status);
 
             if (response?.status == 200) {
                 const alert = (

@@ -1,8 +1,7 @@
 .profile-container {
     background-color: #f1f1f1;
-    padding-top: 200px !important;
-    padding-bottom: 300px !important;
-    position: relative;
+    padding-bottom: 150px;
+    height: 1000px;
   }
   
   .profile-container .img-1 {
@@ -28,10 +27,11 @@
   }
   
   .data-container {
+    margin-top: 200px;
     background-color: #ffffff;
     width: 900px;
     height: 450px;
-    margin-bottom: 250px;
+    border: solid blue 2px;
   }
 
   .editPhoto{

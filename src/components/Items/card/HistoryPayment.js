@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import InputFileProofPayment from "../../../pages/payment/Proof";
+import InputFileProofPayment from "../../Button/InputFileProofPayment";
 import formatNumber from "../Format/format";
 import formatWeek from '../Format/formatWeek'
 import Logo from "../../../img/Icon.png";
@@ -12,7 +12,6 @@ export default function PaymentCard({ data, setData }) {
     const { stateAuth } = useContext(AuthContext);
     // const [transaction, setTransaction] = useState(data);
 
-    console.log(stateAuth.user.id);
     function formatDate(date) {
         const newDate = new Date(date);
         return Intl.DateTimeFormat("id-ID", {

@@ -22,7 +22,7 @@ export const Profile = () => {
     const history = useHistory()
     const { stateAuth, dispatch } = useContext(AuthContext);
     const [profile, setProfile] = useState([]);
-    const [preview, setPreview] = useState(ProfileImg);
+    const [preview, setPreview] = useState(null);
 
 
     // Profile
@@ -64,9 +64,9 @@ export const Profile = () => {
     console.log(transactions);
 
     return (
-        <div>
+        <>
             <Navbar />
-            <Container fluid className="profile-container ">
+            <div className="profile-container ">
                 {profile.filter((user) => user.email === stateAuth.user.email).map((myProfile) => (
                     <Container className="d-flex px-5 py-4  data-container rounded justify-content-between">
                         <div className="profile-content px-4">
@@ -132,9 +132,9 @@ export const Profile = () => {
                         </>
                     )}
                 </div>
-                <Footer />
-            </Container>
-        </div >
+            </div>
+            <Footer />
+        </>
     );
 };
 

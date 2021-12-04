@@ -1,40 +1,49 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import Navbar from "../components/Navbar/Navbar";
 import Header from "../components/Header/Header";
-import Main from "../components/Main/Main";
+import Navbar from "../components/Navbar/Navbar";
+import GroupTour from "../components/Main/Main";
 import Footer from "../components/Footer/Footer";
-import ListTransaction from "../pages/list_transactions/ListTransaction";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContextProvider";
+
+import { API } from '../config/api'
 
 function Home() {
 
     const { stateAuth } = useContext(AuthContext);
     const [trips, setTrips] = useState(null);
     const [searchData, setSearchData] = useState("");
-    const [isSearching, setIsSearching] = useState(false);
+
+    const getTrips = async () => {
+        try {
+            const response = await API.get("/trips");
+            setTrips(response.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getTrips();
+    }, []);
 
     return (
         <>
             {
-                stateAuth?.isAdmin ? (
+                stateAuth?.user.status === "admin" ? (
                     <>
-                        <ListTransaction />
+                        <Navbar />
+                        <GroupTour data={trips} isAdmin={stateAuth.user.status === "admin"} />
                     </>
                 ) : (
                     <div>
                         <Navbar />
-                        <Header
-                            trips={trips}
-                            setIsSearching={setIsSearching}
-                            searchData={searchData}
-                            setSearchData={setSearchData}
-                        />
+                        <Header />
                         <Container fluid className="main">
-                            <Main />
-                            <Footer />
+                            <GroupTour data={trips} />
                         </Container>
+                        <Footer />
                     </div>
                 )
             }

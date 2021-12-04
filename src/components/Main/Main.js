@@ -1,51 +1,93 @@
-import "./Main.css";
-import formatNumber from '../Items/Format/format'
-import Footer from "../Footer/Footer";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { API } from '../../config/api'
+import { Link, useHistory } from "react-router-dom";
 
-function Main() {
-
-    const [trips, setTrips] = useState([])
-
-    const getTrips = async () => {
-        try {
-            const response = await API.get('/trips')
-            setTrips(response.data.data)
-            console.log(response.data.data);
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    useEffect(() => {
-        getTrips();
-    }, []);
-    console.log(trips);
+export default function GroupTour({ data, isAdmin, searchData }) {
+    const history = useHistory();
 
     return (
-        <div>
-            <h1 className="groupTitle">Group Tour</h1>
-            < div className="container-fluid containerGroup mt-5 d-flex gap-3 flex-wrap ">
-                {trips.map((allTrips) => (
-                    <div key={allTrips.id} className="container contentContainer rounded mt-3">
-                        <Link to={`/detail-trip/${allTrips.id}`}>
-                            <img src={allTrips.image[0].url} alt=""></img>
-                        </Link>
-                        <h3>
-                            {allTrips.day}D/{allTrips.night}N {allTrips.title}
-                        </h3>
-                        <div className="price-container d-flex justify-content-between">
-                            <p>IDR. {formatNumber(allTrips.price)}</p>
-                            <small>{allTrips.country.name}</small>
+        <section className="group-tour mb-5">
+            <div className="container">
+                <div className="title text-center">
+                    {isAdmin ? (
+                        <div
+                            className="d-flex justify-content-between"
+                            style={{ paddingTop: 150 }}
+                        >
+                            <h2 className="fs-1 fw-bold">Income Trip</h2>
+                            <button
+                                className="btn btn-primary text-white fw-bold"
+                                style={{ width: 150, height: 40 }}
+                                onClick={() => {
+                                    history.push("/add-trip");
+                                }}
+                            >
+                                Add Trip
+                            </button>
                         </div>
-                    </div>
-                ))}
-                <Footer />
+                    ) : (
+                        <h2 className="fs-1 fw-bold">Group Tour</h2>
+                    )}
+                </div>
+                <div className="row gy-5 pb-5">
+                    {data
+                        ?.filter((item) => {
+                            if (
+                                item?.title.toLowerCase().includes(searchData?.toLowerCase()) ||
+                                item?.country.name
+                                    .toLowerCase()
+                                    .includes(searchData?.toLowerCase()) ||
+                                String(item?.price)
+                                    .toLowerCase()
+                                    .includes(searchData?.toLowerCase())
+                            ) {
+                                return item;
+                            } else if (!searchData) {
+                                return item;
+                            }
+                        })
+                        .map((item, index) => {
+                            return (
+                                <div
+                                    key={`groupTour-index${index}`}
+                                    className={`${item.quota > 0
+                                        ? "col-sm-12 col-md-6 col-lg-4 d-flex justify-content-center"
+                                        : "d-none"
+                                        }`}
+                                >
+                                    <Link
+                                        to={`/detail/${item.id}`}
+                                        className="text-decoration-none"
+                                    >
+                                        <div className="card shadow-sm p-2">
+                                            <img
+                                                src={item.image[0].url}
+                                                alt={item.title}
+                                                className="card-img-top rounded mb-1"
+                                                width="328"
+                                                height="241"
+                                            />
+                                            <div className="capacity rounded-start bg-white text-dark d-flex justify-content-center align-items-center fw-bold">
+                                                {item.quota}/{item.maxQuota}
+                                            </div>
+                                            <div className="card-body">
+                                                <h5 className="card-title mb-3 text-dark fw-bold text-truncate">
+                                                    {item.title}
+                                                </h5>
+                                                <div className="card-text d-flex justify-content-between">
+                                                    <span className="text-primary fw-bold">
+                                                        IDR. {item.price}
+                                                    </span>
+                                                    <span className="text-muted">
+                                                        {item.country.name}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                            );
+                        })}
+                </div>
             </div>
-        </div >
+        </section>
     );
 }
-
-export default Main;

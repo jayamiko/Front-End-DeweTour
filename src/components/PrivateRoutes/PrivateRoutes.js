@@ -6,7 +6,6 @@ import { AuthContext } from "../../Context/AuthContextProvider";
 const PrivateRoute = ({ component: Component, ...rest }) => {
 
     const { stateAuth, dispatch } = useContext(AuthContext);
-    console.log(stateAuth);
 
     return (
         <>

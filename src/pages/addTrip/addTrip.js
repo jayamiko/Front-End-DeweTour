@@ -78,11 +78,11 @@ const AddTrip = () => {
             data.set("dateTrip", input.dateTrip);
             data.set("price", input.price);
             data.set("quota", input.quota);
+            data.set("maxQuota", input.quota);
             data.set("description", input.description);
 
             const response = await API.post("/trip", data, config);
             history.push("/incometrip");
-            console.log(response.data.data);
         } catch (error) {
             console.log(error);
         }

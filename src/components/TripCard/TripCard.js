@@ -15,7 +15,6 @@ function TripCard(props) {
         try {
             const profileAPI = await API.get('/users')
             setProfile(profileAPI.data.data)
-            console.log(profileAPI.data.data);
         } catch (error) {
             console.log(error)
         }
@@ -24,7 +23,6 @@ function TripCard(props) {
     useEffect(() => {
         getProfile();
     }, []);
-    console.log(profile);
 
     return (
         <div>
