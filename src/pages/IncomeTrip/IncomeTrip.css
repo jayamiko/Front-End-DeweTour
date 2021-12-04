@@ -1,15 +1,15 @@
 .containerIncomeTrip{
     position: absolute;
     margin-top: 100px;
-    width: 1365px !important;
-}
-
-.incomeTrip{
+    width: auto !important;
+  }
+  
+  .incomeTrip{
     font-weight: bold;
     margin-top: 50px;
 }
 .btnWarning{
-    margin-top: 50px;
+  margin-top: 50px;
     background-color: #FFAF00;
     border-radius: 5px;
 }
@@ -22,6 +22,7 @@
     margin-bottom: -50px;
     margin-left: 160px;
     margin-right: 160px;
+    margin-bottom: 50px;
 }
 
   .hibiscus-img {

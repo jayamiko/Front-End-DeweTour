@@ -1,7 +1,7 @@
 .profile-container {
     background-color: #f1f1f1;
     padding-bottom: 150px;
-    height: 1000px;
+    height: auto !important;
   }
   
   .profile-container .img-1 {
@@ -31,7 +31,6 @@
     background-color: #ffffff;
     width: 900px;
     height: 450px;
-    border: solid blue 2px;
   }
 
   .editPhoto{

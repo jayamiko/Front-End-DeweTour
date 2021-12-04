@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { API } from "../../config/api";
 import './Profile.css'
-import ProfileImg from "../../img/Rectangle 12.png";
 
 
 export default function Avatar({ userId, avatar }) {
-    const [preview, setPreview] = useState(ProfileImg);
+    const [preview, setPreview] = useState(avatar);
 
     const handleChange = async (e) => {
         try {
@@ -35,7 +34,7 @@ export default function Avatar({ userId, avatar }) {
         <div className="input-file-avatar">
             <div className="preview-image" style={{ width: 280, height: 345 }}>
                 <img
-                    src={avatar}
+                    src={preview}
                     alt="User"
                     width="280"
                     height="345"

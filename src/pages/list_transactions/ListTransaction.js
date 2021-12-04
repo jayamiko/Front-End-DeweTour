@@ -6,15 +6,15 @@ import "./ListTransaction.css";
 
 const ListTransaction = () => {
     return (
-        <div className="containerTransaction">
+        <>
             <Navbar />
-            <Container fluid className="list_transaction-container mt-5  ">
-                <Container>
-                    <TableTransaction />
-                </Container>
-            </Container>
+            <div style={{
+                marginTop: '200px'
+            }}>
+                <TableTransaction />
+            </div>
             <Footer />
-        </div>
+        </>
     );
 };
 

@@ -9,7 +9,6 @@ import Avatar from "../../img/avatar.png";
 import Envelope from "../../img/envelope.png";
 import Call from "../../img/phone.png";
 import Map from "../../img/map.png";
-import ProfileImg from "../../img/Rectangle 12.png";
 import QRimage from "../../img/qr.png";
 import { API } from '../../config/api'
 import { useEffect, useState } from 'react';
@@ -22,8 +21,6 @@ export const Profile = () => {
     const history = useHistory()
     const { stateAuth, dispatch } = useContext(AuthContext);
     const [profile, setProfile] = useState([]);
-    const [preview, setPreview] = useState(null);
-
 
     // Profile
     const getProfile = async () => {
@@ -38,7 +35,7 @@ export const Profile = () => {
     useEffect(() => {
         getProfile();
     }, []);
-    console.log(profile);
+    console.log(profile?.photo);
 
     const [transactions, setTransactions] = useState([]);
 
