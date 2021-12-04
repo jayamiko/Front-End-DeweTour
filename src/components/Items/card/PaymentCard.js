@@ -1,11 +1,19 @@
 import { useState } from "react";
 
 import Icon from '../../../img/Icon.png'
-
+import formatNumber from "../Format/format";
+import formatWeek from '../Format/formatWeek'
 import InputFileProofPayment from "../../Button/InputFileProofPayment";
 
 export default function PaymentCard({ data, setData }) {
     const [preview, setPreview] = useState(null);
+
+    function formatDate(date) {
+        const newDate = new Date(date);
+        return Intl.DateTimeFormat("id-ID", {
+            dateStyle: "long",
+        }).format(newDate);
+    }
 
     return (
         <section className="payment-card"
@@ -23,9 +31,9 @@ export default function PaymentCard({ data, setData }) {
                                     <h1 className="h4 fw-bold text-end">Booking</h1>
                                     <p className="text-end">
                                         <span className="fw-bold">
-                                            {data?.createdAt}
+                                            {formatWeek(data?.createdAt)}
                                         </span>
-                                        , {data?.createdAt}
+                                        , {formatDate(data?.createdAt)}
                                     </p>
                                 </div>
                             </div>
@@ -51,7 +59,7 @@ export default function PaymentCard({ data, setData }) {
                                     <div className="col-auto mb-4">
                                         <div className="fs-6 fw-bold mb-1">Date Trip</div>
                                         <div className="text-muted" style={{ fontSize: 12 }}>
-                                            {data?.trip.dateTrip}
+                                            {formatDate(data?.trip.dateTrip)}
                                         </div>
                                     </div>
                                     <div className="col">
@@ -133,8 +141,8 @@ export default function PaymentCard({ data, setData }) {
                                 <tbody className="text-muted">
                                     <tr>
                                         <td>1</td>
-                                        <td>{data?.user.fullname}</td>
-                                        <td>{data?.user.gender}</td>
+                                        <td>{data?.user.name}</td>
+                                        <td>Male</td>
                                         <td>{data?.user.phone}</td>
                                         <td className="fw-bold">Qty</td>
                                         <td className="fw-bold">:</td>
@@ -145,7 +153,7 @@ export default function PaymentCard({ data, setData }) {
                                         <td>Total</td>
                                         <td>:</td>
                                         <td className="text-danger">
-                                            IDR. {data?.total}
+                                            IDR. {formatNumber(data?.counterQty * data?.trip.price)}
                                         </td>
                                     </tr>
                                 </tbody>
