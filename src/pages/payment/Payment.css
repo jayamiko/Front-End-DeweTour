@@ -20,3 +20,57 @@
   .btnChange{
     background-color: orange !important;
   }
+
+  .notifWarning{
+    color: orange !important;
+    position: relative;
+    top: 70px;
+    width: 112px;
+    height: 24px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #f89c9c 0%,#e09090 100%);
+    font-family: "Avenir";
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 16px;
+display: flex;
+align-items: center;
+text-align: center;
+  }
+
+  .notifSuccess{
+    color: green !important;
+    position: relative;
+    top: 70px;
+    width: 112px;
+    height: 24px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, #f89c9c 0%,#e09090 100%);
+    font-family: "Avenir";
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 16px;
+display: flex;
+align-items: center;
+text-align: center;
+  }
+
+  .notifDanger{
+    color: maroon !important;
+    position: relative;
+    top: 70px;
+    width: 112px;
+    height: 24px;
+    background: linear-gradient(180deg, #f89c9c 0%,#e09090 100%);
+    border-radius: 2px;
+    font-family: "Avenir";
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 16px;
+display: flex;
+align-items: center;
+text-align: center;
+  }

@@ -12,10 +12,26 @@ export default function GroupTour({ data, isAdmin, searchData }) {
                             className="d-flex justify-content-between"
                             style={{ paddingTop: 150 }}
                         >
-                            <h2 className="fs-1 fw-bold">Income Trip</h2>
+                            <h2 className="fs-1 fw-bold"
+                                style={{
+                                    paddingLeft: '20px'
+                                }}
+                            >Income Trip
+                            </h2>
                             <button
-                                className="btn btn-primary text-white fw-bold"
-                                style={{ width: 150, height: 40 }}
+                                className="buttonAddTrip"
+                                style={{
+                                    width: 150,
+                                    height: 40,
+                                    background: '#FFAF00',
+                                    fontSize: '18px',
+                                    color: '#FFFFFF',
+                                    fontWeight: '900',
+                                    fontFamily: 'Avenir',
+                                    lineHeight: '25px',
+                                    textAlign: 'center',
+                                    borderRadius: '5px'
+                                }}
                                 onClick={() => {
                                     history.push("/add-trip");
                                 }}
@@ -27,7 +43,11 @@ export default function GroupTour({ data, isAdmin, searchData }) {
                         <h2 className="fs-1 fw-bold">Group Tour</h2>
                     )}
                 </div>
-                <div className="row gy-5 pb-5">
+                <div className="row gy-5 pb-5"
+                    style={{
+                        marginTop: '5px'
+                    }}
+                >
                     {data
                         ?.filter((item) => {
                             if (
@@ -57,7 +77,8 @@ export default function GroupTour({ data, isAdmin, searchData }) {
                                         to={`/detail/${item.id}`}
                                         className="text-decoration-none"
                                     >
-                                        <div className="card shadow-sm p-2">
+                                        <div className="card shadow-sm p-2"
+                                        >
                                             <img
                                                 src={item.image[0].url}
                                                 alt={item.title}

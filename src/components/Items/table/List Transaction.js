@@ -55,19 +55,17 @@ export default function ListTransaction({ data }) {
                                     <td>{item.user.name}</td>
                                     <td>{item.trip.title}</td>
                                     <td>
-                                        {item.attachment === null ? (
-                                            <div className="text-danger">NULL</div>
-                                        ) : (
-                                            item.attachment.split("/")[5]
-                                        )}
+                                        <a href={item.attachment}
+                                            style={{ color: 'blue', fontFamily: 'Avenir', fontSize: 'auto' }}
+                                        >Preview</a>
                                     </td>
                                     <td
                                         className={`fw-bold
                       ${(item.status === "Waiting Payment" || item.status === "Waiting Approve") &&
-                                            "text-primary"
+                                            "status-pending"
                                             }
-                      ${item.status === "Approve" && "text-success"}
-                      ${item.status === "Cancel" && "text-danger"}`}
+                      ${item.status === "Approve" && "status-approve"}
+                      ${item.status === "Cancel" && "status-cancel"}`}
                                     >
                                         {item.status === "Waiting Payment" ||
                                             item.status === "Waiting Approve"
@@ -102,6 +100,6 @@ export default function ListTransaction({ data }) {
                 dataPay={dataPay}
                 setDataPay={setDataPay}
             />
-        </section>
+        </section >
     );
 }

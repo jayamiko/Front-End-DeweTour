@@ -33,18 +33,12 @@ function AdminDropdown() {
                 <img src={Profile} alt="Profile" />
                 <div className="dropdown-content py-3 px-3">
                     <div className="desc d-flex flex-column gap-4">
-                        <div className="d-flex align-items-center gap-2">
-                            <img src="/assets/journey1.png" alt=""></img>
-                            <Link to="/incometrip">
+                        <Link to="/list-transaction">
+                            <div className="d-flex align-items-center gap-2">
+                                <img src="/assets/journey1.png" alt=""></img>
                                 <a className="fw-bold text-dark" href="/">Trip</a>
-                            </Link>
-                        </div>
-                        <div className="d-flex align-items-center gap-2">
-                            <img src={iconTrans} alt="" className="iconTrans"></img>
-                            <Link to="/list-transaction">
-                                <a className="fw-bold text-dark" href="/">List Transaction</a>
-                            </Link>
-                        </div>
+                            </div>
+                        </Link>
                         <div
                             onClick={logoutHandle}
                             className="d-flex align-items-center po-hover gap-2">

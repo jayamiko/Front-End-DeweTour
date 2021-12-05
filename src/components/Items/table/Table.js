@@ -1,5 +1,3 @@
-import { Table } from "react-bootstrap";
-import ModalPay from "../modal/ModalPay";
 import { API } from "../../../config/api";
 import { useEffect, useState } from "react";
 import ListTransaction from './List Transaction'
@@ -18,8 +16,6 @@ const TableComp = () => {
         getAllTransaction();
     }, []);
 
-
-    const [modalShow, setModalShow] = useState(false);
     return (
         <main>
             {!transactions?.length ? (
