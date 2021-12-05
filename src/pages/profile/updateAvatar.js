@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { API } from "../../config/api";
 import './Profile.css'
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 
 export default function Avatar({ userId, avatar }) {
     const [preview, setPreview] = useState(avatar);
@@ -22,11 +24,18 @@ export default function Avatar({ userId, avatar }) {
 
             await API.put(`/user/${userId}`, formData, config);
 
-
             setTimeout(() => {
+                toast.success(`Update Profile is Success`, {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 2000
+                })
             }, 1000);
         } catch (error) {
             console.log(error);
+            toast.error(`Update Profile is Failed`, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 2000
+            })
         }
     };
 

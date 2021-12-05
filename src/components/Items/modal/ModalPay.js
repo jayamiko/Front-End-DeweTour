@@ -7,6 +7,9 @@ import Logo from "../../../img/Icon.png";
 import { useEffect, useState } from "react";
 import Nodata from "../../../img/no-data.jpg";
 import '../../../pages/payment/Payment.css'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 
 export default function Invoice(props) {
 
@@ -49,6 +52,10 @@ export default function Invoice(props) {
         await API.put(`/transactions/confirm/${dataPay.id}`, data, config);
 
         setTimeout(() => {
+            toast.success(`Confirm is Success`, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 2000
+            })
             window.location.reload();
         }, 1000);
     };

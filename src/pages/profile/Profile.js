@@ -58,8 +58,6 @@ export const Profile = () => {
         getAllTransaction();
     }, []);
 
-    console.log(transactions);
-
     return (
         <>
             <Navbar />

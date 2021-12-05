@@ -78,7 +78,6 @@ function DetailTrip() {
         getDataTransactionsByUserId();
     }, []);
 
-
     const handleClose = () => {
         setShow({ login: false, register: false });
     };
@@ -104,7 +103,7 @@ function DetailTrip() {
                 tripId: detailTrip?.id,
                 userId: stateAuth.user.id,
                 counterQty: add,
-                total: totalPrice,
+                total: totalPrice + detailTrip?.price,
             }));
         }
     };
@@ -118,7 +117,7 @@ function DetailTrip() {
                 tripId: detailTrip?.id,
                 userId: stateAuth.user.id,
                 counterQty: subtract,
-                total: totalPrice,
+                total: totalPrice + detailTrip?.price,
             }));
         }
     };

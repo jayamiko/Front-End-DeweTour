@@ -44,11 +44,17 @@ export default function PaymentCard({ data, setData }) {
                                 <div className="fw-bold fs-5">{data?.trip.title}</div>
                                 <div className="text-muted mb-4">{data?.trip.country.name}</div>
                                 <div
+                                    style={{
+                                        position: 'absolute',
+                                        marginTop: '120px',
+                                        marginLeft: '20px',
+                                        borderRadius: '2px'
+                                    }}
                                     className={`notif p-1 d-flex justify-content-center align-items-center 
-                  ${data?.status === "Waiting Payment" && "notif-danger"}
-                  ${data?.status === "Waiting Approve" && "notif-warning"}
-                  ${data?.status === "Cancel" && "notif-danger"}
-                  ${data?.status === "Approve" && "notif-success"}
+                  ${data?.status === "Waiting Payment" && "notifWarning"}
+                  ${data?.status === "Waiting Approve" && "notifWarning"}
+                  ${data?.status === "Cancel" && "notifDanger"}
+                  ${data?.status === "Approve" && "notifSuccess"}
                   `}
                                 >
                                     {data?.status}

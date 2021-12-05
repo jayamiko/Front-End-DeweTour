@@ -61,7 +61,7 @@ export default function Login({ show, handleClose, handleSwitch }) {
                     type: "LOGIN_SUCCESS",
                     payload: response.data.data,
                 });
-                toast.success(`Success`, {
+                toast.success(`Login Success`, {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 2000
                 })

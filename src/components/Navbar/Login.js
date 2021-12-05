@@ -1,16 +1,17 @@
 import { useState, useContext } from "react";
-import { Button, Modal, Form, Alert } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import Palm from "../../img/palm1.png";
 import { AuthContext } from "../../Context/AuthContextProvider";
 import { API, setAuthToken } from '../../config/api'
 import { useHistory } from "react-router-dom";
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 
 export default function Login() {
     const [modal, setModal] = useState(false);
     const [registerModal, setRegisterModal] = useState(false);
     const { stateAuth, dispatch } = useContext(AuthContext);
-    const [message, setMessage] = useState(null)
     let history = useHistory();
 
     const checkAuth = () => {
@@ -66,35 +67,24 @@ export default function Login() {
                 })
 
                 if (response.data.data.status === "admin") {
-                    history.push('/incometrip')
-                } else {
                     history.push('/')
+                    toast.success(`Login Success`, {
+                        position: toast.POSITION.BOTTOM_RIGHT,
+                        autoClose: 2000
+                    })
                 }
 
-                const alert = (
-                    < Alert variant="success" className="py-1" >
-                        Success
-                    </Alert >
-                )
-                setMessage(alert);
-                setModal(false);
-            } else {
-                const alert = (
-                    < Alert variant="danger" className="py-1" >
-                        Failed
-                    </Alert >
-                );
-                setMessage(alert);
+                toast.success(`Login Success`, {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 2000
+                })
             }
-
         } catch (error) {
-            const alert = (
-                < Alert variant="danger" className="py-1" >
-                    Failed
-                </Alert >
-            );
-            setMessage(alert);
             console.log(error)
+            toast.error(`Email and Password is Invalid`, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 2000
+            })
         }
     }
 
@@ -102,12 +92,12 @@ export default function Login() {
 
     return (
         <>
-            <a onClick={openModalLogin} className="btn-one" href="#">
+            <a onClick={openModalLogin} className="btn-one" href="#/">
                 Login
             </a>
             <Modal show={modal}>
                 <Modal.Body className="modal-content">
-                    <img src={Palm}></img>
+                    <img src={Palm} alt=""></img>
                     <h2 className="text-center my-5">Login</h2>
                     <button
                         type="button"
@@ -152,7 +142,7 @@ export default function Login() {
                             </Button>
                             <small className="text-center">
                                 Don't have an account ? click{" "}
-                                <a onClick={openModalRegister}>Here</a>
+                                <a onClick={openModalRegister} href="#/">Here</a>
                             </small>
                         </div>
                     </Form>

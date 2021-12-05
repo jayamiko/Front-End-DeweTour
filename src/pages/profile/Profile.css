@@ -59,3 +59,7 @@
   .btnChange{
     background-color: orange !important;
   }
+
+  .preview-image{
+    background-image: url(../../img/Rectangle\ 12.png);
+  }

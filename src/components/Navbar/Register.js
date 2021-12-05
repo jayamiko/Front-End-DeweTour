@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Button, Modal, Form, Alert } from "react-bootstrap";
+import { Button, Modal, Form } from "react-bootstrap";
 import Palm from "../../img/palm1.png";
 import { API } from '../../config/api'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+toast.configure()
 
 export default function Register() {
 
     const [modal, setModal] = useState(false);
     const [registerModal, setRegisterModal] = useState(false);
-    const [message, setMessage] = useState(null)
     const [formRegister, setFormRegister] = useState({
         name: "",
         email: "",
@@ -24,7 +26,6 @@ export default function Register() {
         setRegisterModal(true);
         setModal(false);
     };
-    const closeModalLogin = () => setModal(false);
     const closeModalRegister = () => setRegisterModal(false);
 
     const { name, email, password, phone, address } = formRegister;
@@ -49,13 +50,8 @@ export default function Register() {
             const body = JSON.stringify(formRegister)
             const response = await API.post("/register", body, config)
 
-            if (response?.status == 200) {
-                const alert = (
-                    <Alert variant="success">
-                        <Alert.Heading>Register Success</Alert.Heading>
-                    </Alert>
-                )
-                setMessage(alert);
+            if (response?.status === 200) {
+
                 setFormRegister({
                     name: "",
                     email: "",
@@ -63,26 +59,20 @@ export default function Register() {
                     phone: "",
                     address: "",
                 });
-                setRegisterModal(false);
-                setModal(false);
-            } else {
-                const alert = (
-                    <Alert variant="danger">
-                        <Alert.Heading>Register Failed</Alert.Heading>
-                    </Alert>
-                )
-                setMessage(alert);
+
+                toast.success(`Register Success`, {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    autoClose: 2000
+                })
                 setRegisterModal(false);
                 setModal(false);
             }
         } catch (error) {
-            const alert = (
-                < Alert variant="danger" className="py-1" >
-                    Failed
-                </Alert >
-            );
-            setMessage(alert);
             console.log(error);
+            toast.error(`Please fill in your data correctly`, {
+                position: toast.POSITION.BOTTOM_RIGHT,
+                autoClose: 2000
+            })
         }
     }
 
@@ -90,7 +80,7 @@ export default function Register() {
         <>
             <Modal show={registerModal}>
                 <Modal.Body className="modal-content">
-                    <img src={Palm}></img>
+                    <img src={Palm} alt=""></img>
                     <h2 className="text-center my-5">Register</h2>
                     <button
                         type="button"
@@ -161,7 +151,7 @@ export default function Register() {
                             </Button>
                             <small className="text-center">
                                 Have an account ? click{" "}
-                                <a onClick={openModalLogin}>Here</a>
+                                <a onClick={openModalLogin} href="#/">Here</a>
                             </small>
                         </div>
                     </Form>
