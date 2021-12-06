@@ -151,7 +151,7 @@ export default function Register() {
                             </Button>
                             <small className="text-center">
                                 Have an account ? click{" "}
-                                <a onClick={openModalLogin} href="#/">Here</a>
+                                <a onClick={openModalLogin} href="">Here</a>
                             </small>
                         </div>
                     </Form>

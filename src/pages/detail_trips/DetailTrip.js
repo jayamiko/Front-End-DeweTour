@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import formatDate from '../../components/Items/Format/formatDate'
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import Calender from "../../img/calender.png"
@@ -9,12 +10,12 @@ import Hotel from "../../img/hotel.png"
 import Time from "../../img/time.png"
 import Meal from "../../img/meal.png"
 import "./DetailTrip.css";
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
 import ModalLogin from "../../components/Items/modal/ModalLogin";
 import ModalRegister from "../../components/Items/modal/ModalRegister.js";
 import { API } from '../../config/api'
 import { AuthContext } from "../../Context/AuthContextProvider";
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 toast.configure()
 
 function DetailTrip() {
@@ -24,13 +25,11 @@ function DetailTrip() {
     const { stateAuth } = useContext(AuthContext);
     const history = useHistory();
 
-    console.log("===STATEAUTH===");
-    console.log(stateAuth.user.id);
-
     const getDetailTrip = async (id) => {
         try {
             const response = await API.get("/trip/" + id);
             setDetailTrip(response.data.data);
+            console.log(response.data.data);
         } catch (error) {
             console.log(error);
         }
@@ -39,6 +38,7 @@ function DetailTrip() {
     useEffect(() => {
         getDetailTrip(id);
     }, []);
+
 
     const rupiah = (number) => {
         return new Intl.NumberFormat('id-ID', {
@@ -68,6 +68,7 @@ function DetailTrip() {
 
     const getDataTransactionsByUserId = async () => {
         const response = await API.get("/transactions");
+        console.log(response.data.data);
         const filteredTransactions = response.data.data.filter(
             (item) => item.user.id === stateAuth.user.id
         );
@@ -167,7 +168,7 @@ function DetailTrip() {
                 const bodyQuota = JSON.stringify(quotaRemaining);
                 await API.put(`/trip/${detailTrip?.id}`, bodyQuota, config);
                 response.data.status === "success" &&
-                    toast.success(`Success`, {
+                    toast.success(`Order successful, now complete your transaction`, {
                         position: toast.POSITION.BOTTOM_RIGHT,
                         autoClose: 2000
                     })
@@ -292,7 +293,7 @@ function DetailTrip() {
                             display: 'flex',
                         }}>
                             <img src={Calender} alt="" />
-                            <p style={{ paddingLeft: '10px' }}>{detailTrip?.dateTrip}</p>
+                            <p style={{ paddingLeft: '10px' }}>{formatDate(detailTrip?.dateTrip)}</p>
                         </div>
                     </div>
                 </div>
@@ -310,16 +311,16 @@ function DetailTrip() {
                 <p className="description">{detailTrip?.description}</p>
 
                 <section className="detail-calculate mb-5">
-                    <div className="container">
+                    <div style={{ marginTop: '15px' }}>
                         <div className="d-flex justify-content-between fw-bold fs-5">
-                            <div className="price d-flex align-items-center">
+                            <div style={{ color: 'orange', fontFamily: 'Avenir' }}>
                                 IDR.
-                                <span className="mx-2 text-primary">{detailTrip?.price}</span>/
-                                Person
+                                <span style={{ marginLeft: '10px' }}>{rupiah(detailTrip?.price)}</span>/
+                                <span style={{ color: 'black' }}>Person</span>
                             </div>
                             <div className="quantity">
                                 <button
-                                    className="btn btn-primary text-white rounded-circle fw-bold"
+                                    style={{ background: 'orange', color: 'white', borderRadius: '10px', width: '26.61px', height: '30px' }}
                                     onClick={handleSubtract}
                                 >
                                     -
@@ -328,7 +329,7 @@ function DetailTrip() {
                                     {transaction.counterQty}
                                 </div>
                                 <button
-                                    className="btn btn-primary text-white rounded-circle fw-bold"
+                                    style={{ background: 'orange', color: 'white', borderRadius: '10px', width: '26.61px', height: '30px' }}
                                     onClick={handleAdd}
                                 >
                                     +
@@ -338,16 +339,34 @@ function DetailTrip() {
                         <hr />
                         <div className="d-flex justify-content-between fw-bold">
                             <div className="fs-5">Total :</div>
-                            <div className="text-primary fs-5">
-                                IDR. {totalPrice}
+                            <div
+                                style={{
+                                    color: 'orange',
+                                    lineHeight: '33px',
+                                    fontSize: '24px',
+                                    fontWeight: '900',
+                                    fontFamily: 'Avenir'
+                                }}
+                            >
+                                IDR. {rupiah(totalPrice)}
                             </div>
                         </div>
                         <hr />
                         <div className="d-flex justify-content-end">
                             <button
                                 type="button"
-                                className="btn btn-primary mt-2 fw-bold text-white d-flex align-items-center justify-content-center"
-                                style={{ width: 213, height: 50 }}
+                                style={{
+                                    background: 'orange',
+                                    width: '213px',
+                                    height: '50px',
+                                    borderRadius: '5px',
+                                    fontFamily: 'Avenir',
+                                    lineHeight: '25px',
+                                    fontSize: '18px',
+                                    fontWeight: '900',
+                                    textAlign: 'center',
+                                    color: 'white'
+                                }}
                                 onClick={handleSubmit}
                             >
                                 BOOK NOW

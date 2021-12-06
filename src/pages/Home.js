@@ -13,7 +13,6 @@ function Home() {
 
     const { stateAuth } = useContext(AuthContext);
     const [trips, setTrips] = useState(null);
-    const [searchData, setSearchData] = useState("");
 
     const getTrips = async () => {
         try {

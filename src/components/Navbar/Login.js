@@ -57,7 +57,6 @@ export default function Login() {
 
             const body = JSON.stringify(formLogin)
             const response = await API.post("/login", body, config)
-            console.log(response);
             setAuthToken(response.data.data.token)
 
             if (response?.status === 200) {
@@ -67,17 +66,13 @@ export default function Login() {
                 })
 
                 if (response.data.data.status === "admin") {
+                    console.log(response.data.data.status);
                     history.push('/')
                     toast.success(`Login Success`, {
                         position: toast.POSITION.BOTTOM_RIGHT,
                         autoClose: 2000
                     })
                 }
-
-                toast.success(`Login Success`, {
-                    position: toast.POSITION.BOTTOM_RIGHT,
-                    autoClose: 2000
-                })
             }
         } catch (error) {
             console.log(error)
@@ -92,7 +87,7 @@ export default function Login() {
 
     return (
         <>
-            <a onClick={openModalLogin} className="btn-one" href="#/">
+            <a onClick={openModalLogin} className="btn-one">
                 Login
             </a>
             <Modal show={modal}>
@@ -142,7 +137,7 @@ export default function Login() {
                             </Button>
                             <small className="text-center">
                                 Don't have an account ? click{" "}
-                                <a onClick={openModalRegister} href="#/">Here</a>
+                                <a onClick={openModalRegister} href="">Here</a>
                             </small>
                         </div>
                     </Form>

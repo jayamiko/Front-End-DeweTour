@@ -55,7 +55,7 @@ function App() {
         <Route exact path="/detail/:id" component={DetailTrip} />
         <Route exact path="/payment" component={Payment} />
         <Route exact path="/profile" component={Profile} />
-        <PrivateRoute exact path="/addtrip" component={AddTrip} />
+        <PrivateRoute exact path="/add-trip" component={AddTrip} />
         <PrivateRoute exact path="/incometrip" component={IncomeTrip} />
         <PrivateRoute exact path="/list-transaction" component={ListTransaction} />
       </Switch>

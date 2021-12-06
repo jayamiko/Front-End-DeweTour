@@ -94,9 +94,15 @@ export default function GroupTour({ data, isAdmin, searchData }) {
                                                     {item.title}
                                                 </h5>
                                                 <div className="card-text d-flex justify-content-between">
-                                                    <span className="text-primary fw-bold">
-                                                        IDR. {(item.maxQuota - item.quota) * item.price}
-                                                    </span>
+                                                    {isAdmin ? (
+                                                        <span style={{ color: 'orange' }}>
+                                                            IDR. {(item.maxQuota - item.quota) * item.price}
+                                                        </span>
+                                                    ) : (
+                                                        <span style={{ color: 'orange' }}>
+                                                            IDR. {item.price}
+                                                        </span>
+                                                    )}
                                                     <span className="text-muted">
                                                         {item.country.name}
                                                     </span>
