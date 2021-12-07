@@ -14,13 +14,16 @@ import { API } from '../../config/api'
 import { useEffect, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContextProvider';
 import { useHistory } from "react-router-dom";
-import Nodata from '../../img/no-data.jpg'
+import Nodata from '../../img/folder.png'
+import Box from '../../components/Items/card/Box';
 
 export const Profile = () => {
 
-    const history = useHistory()
     const { stateAuth, dispatch } = useContext(AuthContext);
     const [profile, setProfile] = useState([]);
+    const [transactions, setTransactions] = useState([]);
+    const [trans, setTrans] = useState([]);
+    const [filterData, setFilterData] = useState([]);
 
     // Profile
     const getProfile = async () => {
@@ -35,9 +38,27 @@ export const Profile = () => {
     useEffect(() => {
         getProfile();
     }, []);
-    console.log(profile?.photo);
 
-    const [transactions, setTransactions] = useState([]);
+    const getData = async () => {
+        try {
+            const response = await API.get('/transactions');
+
+            const datas = response.data.data;
+            const mappedData = datas.map((data) => {
+                data.trip.dateTrip = new Date(data.trip.dateTrip).toLocaleDateString('en-GB', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                return data;
+            });
+
+            setTrans(mappedData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getData();
+        setFilterData(trans);
+    }, []);
 
     const getAllTransaction = async () => {
         const response = await API.get("/transactions");
@@ -57,6 +78,14 @@ export const Profile = () => {
     useEffect(() => {
         getAllTransaction();
     }, []);
+
+    const filterDataByStatus = (e) => {
+        const status = e.target.id;
+
+        const data = trans.filter((item) => item.user.id === stateAuth.user.id && item.status === status);
+
+        setFilterData(data);
+    };
 
     return (
         <>
@@ -103,32 +132,80 @@ export const Profile = () => {
                         />
                     </Container>
                 ))}
-                <div className="payment-card container pt-5">
-                    {transactions.length < 1 ? (
-                        <div className="container">
-                            <div className="not-found d-flex justify-content-center align-items-center">
-                                <div className="text-center">
-                                    <img
-                                        src={Nodata}
-                                        alt="Not Found"
-                                        width="250"
-                                        height="250"
-                                    />
-                                    <h1 className="fw-bold h5">No History</h1>
-                                </div>
-                            </div>
-                        </div>
+
+                <h1
+                    style={{
+                        fontFamily: 'Avenir',
+                        fontWeight: '900',
+                        fontSize: '36px',
+                        lineHeight: '49px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginLeft: '120px',
+                        marginTop: '120px'
+                    }}
+                >History Trip</h1>
+
+                <div>
+                    {trans === null ? (
+                        <div>Loading...</div>
                     ) : (
-                        <>
-                            <h2 className="fw-bold mb-5 ms-3">History Trip</h2>
-                            {transactions.map((item, index) => (
-                                <HistoryPayment data={item} key={`paymentCard-${index}`} />
-                            ))}
-                        </>
+
+                        <section className="container mx-auto"
+                        >
+
+                            <div className="bg-blue-100 flex my-10"
+                                style={{ marginBottom: '25px', marginTop: '25px', marginLeft: '10px' }}
+                            >
+                                <button onClick={filterDataByStatus} id="Waiting Approve" className="bg-gray-50 py-2 px-4 w-full hover:bg-yellow-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
+                                    style={{ borderRadius: '10px', color: '#FFFFFF', fontWeight: '900', fontFamily: "Avenir", background: 'orange' }}
+                                >
+                                    Waiting Approve
+                                </button>
+                                <button onClick={filterDataByStatus} id="Approve" className="bg-gray-50 py-2 px-4 w-full hover:bg-green-500 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
+                                    style={{ borderRadius: '10px', color: '#FFFFFF', fontWeight: '900', fontFamily: "Avenir", background: 'green' }}
+                                >
+                                    Approve
+                                </button>
+                                <button onClick={filterDataByStatus} id="Canceled" className="bg-gray-50 py-2 px-4 w-full hover:bg-red-600 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
+                                    style={{ borderRadius: '10px', color: '#FFFFFF', fontWeight: '900', fontFamily: "Avenir", background: 'red' }}
+                                >
+                                    Canceled
+                                </button>
+                            </div>
+
+                            <>
+                                {filterData.length > 0 ? (
+                                    <>
+                                        {filterData.map((item, index) => {
+                                            return (
+                                                <Box key={index}>
+                                                    <HistoryPayment data={item} key={`paymentCard-${index}`} />
+                                                </Box>
+                                            );
+                                        })}
+                                    </>
+                                ) : (
+                                    <>
+                                        <img src={Nodata} alt="" width="450px" height="450px"
+                                            style={{ marginLeft: '450px' }}
+                                        />
+                                        <h1
+                                            style={{
+                                                textAlign: 'center',
+                                                position: 'relative',
+                                                bottom: '55px',
+                                                fontWeight: '900',
+                                                fontFamily: 'Avenir'
+                                            }}
+                                        >No Data Payment</h1>
+                                    </>
+                                )}
+                            </>
+                        </section>
                     )}
                 </div>
             </div>
-            <Footer />
         </>
     );
 };

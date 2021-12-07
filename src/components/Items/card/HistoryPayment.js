@@ -49,7 +49,7 @@ export default function PaymentCard({ data, setData }) {
                                         borderRadius: '2px'
                                     }}
                                     className={`notif p-1 d-flex justify-content-center align-items-center 
-                  ${data?.status === "Waiting Payment" && "notifWanger"}
+                  ${data?.status === "Waiting Payment" && "notifWarning"}
                   ${data?.status === "Waiting Approve" && "notifWarning"}
                   ${data?.status === "Cancel" && "notifDanger"}
                   ${data?.status === "Approve" && "notifSuccess"}

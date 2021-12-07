@@ -1,7 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import formatDate from '../../components/Items/Format/formatDate'
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import Calender from "../../img/calender.png"
@@ -293,7 +292,7 @@ function DetailTrip() {
                             display: 'flex',
                         }}>
                             <img src={Calender} alt="" />
-                            <p style={{ paddingLeft: '10px' }}>{formatDate(detailTrip?.dateTrip)}</p>
+                            <p style={{ paddingLeft: '10px' }}>{detailTrip?.dateTrip}</p>
                         </div>
                     </div>
                 </div>
