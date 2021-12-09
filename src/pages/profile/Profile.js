@@ -9,11 +9,9 @@ import Avatar from "../../img/avatar.png";
 import Envelope from "../../img/envelope.png";
 import Call from "../../img/phone.png";
 import Map from "../../img/map.png";
-import QRimage from "../../img/qr.png";
 import { API } from '../../config/api'
 import { useEffect, useState } from 'react';
 import { AuthContext } from '../../Context/AuthContextProvider';
-import { useHistory } from "react-router-dom";
 import Nodata from '../../img/folder.png'
 import Box from '../../components/Items/card/Box';
 
@@ -87,6 +85,8 @@ export const Profile = () => {
         setFilterData(data);
     };
 
+    console.log(trans);
+
     return (
         <>
             <Navbar />
@@ -151,6 +151,7 @@ export const Profile = () => {
                         <div>Loading...</div>
                     ) : (
 
+
                         <section className="container mx-auto"
                         >
 
@@ -167,7 +168,7 @@ export const Profile = () => {
                                 >
                                     Approve
                                 </button>
-                                <button onClick={filterDataByStatus} id="Canceled" className="bg-gray-50 py-2 px-4 w-full hover:bg-red-600 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
+                                <button onClick={filterDataByStatus} id="Cancel" className="bg-gray-50 py-2 px-4 w-full hover:bg-red-600 hover:text-white font-semibold border border-gray-200 text-gray-500 transition duration-300"
                                     style={{ borderRadius: '10px', color: '#FFFFFF', fontWeight: '900', fontFamily: "Avenir", background: 'red' }}
                                 >
                                     Canceled
@@ -206,6 +207,7 @@ export const Profile = () => {
                     )}
                 </div>
             </div>
+            <Footer />
         </>
     );
 };

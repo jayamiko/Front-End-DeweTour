@@ -32,7 +32,7 @@ color: #000000;
 
 .info-trip{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     width: 1018px;
 }
 

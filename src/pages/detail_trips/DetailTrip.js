@@ -13,12 +13,14 @@ import ModalLogin from "../../components/Items/modal/ModalLogin";
 import ModalRegister from "../../components/Items/modal/ModalRegister.js";
 import { API } from '../../config/api'
 import { AuthContext } from "../../Context/AuthContextProvider";
+import moment from 'moment'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 toast.configure()
 
 function DetailTrip() {
 
+    const newDate = new Date();
     const { id } = useParams();
     const [detailTrip, setDetailTrip] = useState(null);
     const { stateAuth } = useContext(AuthContext);
@@ -38,6 +40,7 @@ function DetailTrip() {
         getDetailTrip(id);
     }, []);
 
+    const dateTime = new Date()
 
     const rupiah = (number) => {
         return new Intl.NumberFormat('id-ID', {
@@ -292,7 +295,7 @@ function DetailTrip() {
                             display: 'flex',
                         }}>
                             <img src={Calender} alt="" />
-                            <p style={{ paddingLeft: '10px' }}>{detailTrip?.dateTrip}</p>
+                            <p style={{ paddingLeft: '10px' }}>{moment(detailTrip?.dateTrip).format('l')}</p>
                         </div>
                     </div>
                 </div>
