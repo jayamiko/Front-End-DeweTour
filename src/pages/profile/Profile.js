@@ -1,25 +1,31 @@
+// Import React
 import React, { useContext } from "react";
+import { useEffect, useState } from 'react';
+
+// Import Components
 import { Container } from "react-bootstrap";
-import "./Profile.css";
 import InputFileAvatar from './updateAvatar'
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import { AuthContext } from '../../Context/AuthContextProvider';
 import HistoryPayment from "../../components/Items/card/HistoryPayment";
+import Box from '../../components/Items/card/Box';
+
+// Import Style
+import "./Profile.css";
 import Avatar from "../../img/avatar.png";
 import Envelope from "../../img/envelope.png";
 import Call from "../../img/phone.png";
 import Map from "../../img/map.png";
-import { API } from '../../config/api'
-import { useEffect, useState } from 'react';
-import { AuthContext } from '../../Context/AuthContextProvider';
 import Nodata from '../../img/folder.png'
-import Box from '../../components/Items/card/Box';
+
+// Import API
+import { API } from '../../config/api'
 
 export const Profile = () => {
 
     const { stateAuth, dispatch } = useContext(AuthContext);
     const [profile, setProfile] = useState([]);
-    const [transactions, setTransactions] = useState([]);
     const [trans, setTrans] = useState([]);
     const [filterData, setFilterData] = useState([]);
 
@@ -56,25 +62,6 @@ export const Profile = () => {
     useEffect(() => {
         getData();
         setFilterData(trans);
-    }, []);
-
-    const getAllTransaction = async () => {
-        const response = await API.get("/transactions");
-        console.log(response.data.data[0].user.id);
-        setTransactions(response.data.data)
-        const filteredTransactions = response.data.data
-            .filter((item) => item.user.id === stateAuth.user.id)
-            .filter(
-                (item) =>
-                    item.status === "Waiting Approve" ||
-                    item.status === "Approve" ||
-                    item.status === "Cancel"
-            );
-        setTransactions(filteredTransactions);
-    };
-
-    useEffect(() => {
-        getAllTransaction();
     }, []);
 
     const filterDataByStatus = (e) => {

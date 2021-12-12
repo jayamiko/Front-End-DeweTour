@@ -1,8 +1,15 @@
+// Import React
 import { useState } from "react";
+
+// Import API
 import { API } from "../../config/api";
+
+// Import Style
 import './Profile.css'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+
+
 toast.configure()
 
 export default function Avatar({ userId, avatar }) {

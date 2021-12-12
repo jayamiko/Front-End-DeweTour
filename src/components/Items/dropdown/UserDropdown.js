@@ -1,17 +1,23 @@
+// Import React
 import React from "react";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
+import { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
+
+// Import Components
 import { AuthContext } from "../../../Context/AuthContextProvider";
+
+// Import Style
 import "./DropdownComp.css";
 import Profile from "../../../img/elips.png";
 import User from "../../../img/user 2.png";
 import Payment from "../../../img/Vector.png";
 import Logout from "../../../img/logout.png";
 import Polygon from "../../../img/Polygon.png";
-import { useHistory } from "react-router-dom";
-import { useEffect, useState } from 'react';
-import { API } from '../../../config/api'
 
+// Import API
+import { API } from '../../../config/api'
 
 function UserDropdown() {
     let history = useHistory();
@@ -22,7 +28,6 @@ function UserDropdown() {
         dispatch({
             type: "LOGOUT",
             isLogin: false,
-            isadmin: false,
             user: {
                 email: "",
                 password: "",
@@ -47,19 +52,37 @@ function UserDropdown() {
         getDataProfile();
     }, []);
 
+    console.log(stateAuth.user.photo);
+
     return (
         <>
             <div className="dropdown p-5 ">
                 <img className="polygon" src={Polygon} alt="" />
-                <img src={Profile} alt="Profile" />
+                {stateAuth.user.photo === null ? (
+                    <img
+                        src={Profile}
+                        alt="Profile"
+                        width="50"
+                        height="50"
+                        className="border border-3 border-primary rounded-circle"
+                    />
+                ) : (
+                    <img
+                        src={stateAuth.user.photo}
+                        alt="Profile"
+                        width="50"
+                        height="50"
+                        className="border border-3 border-primary rounded-circle"
+                    />
+                )}
                 <div className="dropdown-content py-3 px-3">
                     <div className="desc d-flex flex-column gap-4">
-                        <div className="d-flex align-items-center gap-2">
-                            <img src={User} alt=""></img>
-                            <Link to="/profile">
+                        <Link to="/profile">
+                            <div className="d-flex align-items-center gap-2">
+                                <img src={User} alt=""></img>
                                 <a className="fw-bold text-dark" href="/">Profile</a>
-                            </Link>
-                        </div>
+                            </div>
+                        </Link>
                         <Link to="/payment">
                             <div className="d-flex align-items-center gap-2">
                                 <img src={Payment} alt=""></img>

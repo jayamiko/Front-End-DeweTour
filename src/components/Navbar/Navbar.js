@@ -1,12 +1,17 @@
-import "./Navbar.css";
+// Import React
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+
+// Import Components
 import Login from './Login'
 import Register from './Register'
-import UserDropdown from "../Items/dropdown/UserDropdown";
-import Icon from "../../img/Icon1.png";
-import { useContext } from "react";
-import { AuthContext } from "../../Context/AuthContextProvider";
 import AdminDropdown from "../Items/dropdown/AdminDropdown";
+import { AuthContext } from "../../Context/AuthContextProvider";
+import UserDropdown from "../Items/dropdown/UserDropdown";
+
+// Import Style
+import "./Navbar.css";
+import Icon from "../../img/Icon1.png";
 
 
 function Navbar() {

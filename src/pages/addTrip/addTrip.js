@@ -82,7 +82,7 @@ const AddTrip = () => {
             data.set("description", input.description);
 
             const response = await API.post("/trip", data, config);
-            history.push("/incometrip");
+            history.push("/");
         } catch (error) {
             console.log(error);
         }
